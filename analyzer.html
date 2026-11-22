@@ -190,7 +190,7 @@ footer a{color:var(--accent)}
 </section>
 
 <footer>
-  The Log Analyzer is part of <a href="index.html">Open SOC SIEM</a>, alongside the Attack Simulator, by Chisom Alozie. Cite as: Alozie, C. (2026). Open SOC SIEM (Version 2.0.0). Zenodo. https://doi.org/10.5281/zenodo.24433065. MIT license. Detection rules are simple teaching rules, not a replacement for a production SIEM. Sample logs use reserved documentation IP ranges and invented hosts.
+  The Log Analyzer is part of <a href="index.html">Open SOC SIEM</a>, alongside the Attack Simulator, by Chisom Alozie. Cite as: Alozie, C. (2026). Open SOC SIEM (Version 2.0). Zenodo. https://doi.org/10.5281/zenodo.24448612. MIT license. Detection rules are simple teaching rules, not a replacement for a production SIEM. Sample logs use reserved documentation IP ranges and invented hosts.
 </footer>
 </div>
 
@@ -489,7 +489,7 @@ function reportHtml(){
 <h2>Charts</h2><div class="grid">${box('Findings by severity',bars(d.sev,{empty:'No findings.'}))}${box('MITRE techniques detected',bars(d.tech,{wide:true,empty:'None.'}))}${box('Top source IP addresses (red = in a finding)',bars(d.ips,{empty:'None.'}))}${box('Events by log source',bars(d.types))}${d.status.length?box('Web response codes',bars(d.status)):''}</div>
 <h2>Findings</h2>${fx||'<p class="meta">No findings with the rule settings used.</p>'}
 <h2>Rule settings</h2><p>Brute force: ${S.p.bf} failed logins within ${S.p.bfw} s. Web scanning: ${S.p.nf} 404 responses within ${S.p.nfw} s.</p>
-<footer>Open SOC SIEM Log Analyzer. Teaching rules only; confirm findings before acting. Cite: Alozie, C. (2026). Open SOC SIEM (Version 2.0.0). Zenodo. https://doi.org/10.5281/zenodo.24433065</footer>
+<footer>Open SOC SIEM Log Analyzer. Teaching rules only; confirm findings before acting. Cite: Alozie, C. (2026). Open SOC SIEM (Version 2.0). Zenodo. https://doi.org/10.5281/zenodo.24448612</footer>
 </main></body></html>`;}
 document.querySelectorAll('[data-dl]').forEach(b=>b.onclick=()=>{
   if(!S.events.length){note('Load logs first, then download the report.');return;}
