@@ -1,4 +1,4 @@
-# Teaching with Open-Clinic-SRA
+# Teaching with Open SOC SIEM
 
 I built this project partly because I couldn't find a good way to *show* someone what a prompt injection looks like from the security team's side. Most of what I found was either papers that measure whether a model gets fooled, or research code that took an afternoon to set up. Neither works well when you have 50 minutes and a room of students on different laptops.
 
@@ -41,8 +41,8 @@ Run the lecture first, then assign the labs. Each lab takes about 2–3 hours. T
 Setup for students:
 
 ```bash
-git clone https://github.com/Chisom303/Open-Clinic-SRA-SIEM-Demo
-cd Open-Clinic-SRA-SIEM-Demo
+git clone https://github.com/Chisom303/Open-SOC-SIEM
+cd Open-SOC-SIEM
 python scripts/detect.py      # should print the baseline table
 ```
 

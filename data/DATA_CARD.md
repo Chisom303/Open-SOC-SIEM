@@ -1,4 +1,4 @@
-# Data Card: Open-Clinic-SRA Synthetic Events v1.0.0
+# Data Card: Open SOC SIEM Synthetic Events v1.0.0
 
 **Files:** `synthetic_events.jsonl`, `synthetic_events.csv` (same content)
 **Generator:** `scripts/generate_logs.py` (seed `20261121`, deterministic)

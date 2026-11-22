@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the Open-Clinic-SRA synthetic labeled event dataset.
+"""Generate the Open SOC SIEM synthetic labeled event dataset.
 
 Deterministic (fixed seed) so anyone can regenerate the exact published file:
     python scripts/generate_logs.py            # writes data/synthetic_events.jsonl and .csv

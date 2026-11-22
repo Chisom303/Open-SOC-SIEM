@@ -4,13 +4,13 @@
 
 ## Candidate title
 
-**Open-Clinic-SRA: A Zero-Install SOC Testbed and Threat Taxonomy for Prompt Injection and Federated Learning Poisoning in Healthcare AI**
+**Open SOC SIEM: A Zero-Install SOC Testbed and Threat Taxonomy for Prompt Injection and Federated Learning Poisoning in Healthcare AI**
 
 (Avoid claiming "detection framework" unless you add evaluation on non-synthetic or independently built data.)
 
 ## Abstract (~200 words)
 
-Hospitals are deploying large language model (LLM) agents that read clinical documents and call tools, and they increasingly train diagnostic models across institutions with federated learning. Both expand the attack surface in ways that conventional security operations center (SOC) tooling does not model. Prompt injection hidden in clinical text can redirect an agent toward data exfiltration, and a single malicious federated participant can implant a backdoor in a shared model. We present Open-Clinic-SRA, an open, zero-install testbed that brings these AI-specific threats into the SOC workflow. Its contributions are (i) CLIN-AGENT, a five-class threat taxonomy for clinical AI deployments that maps each class to MITRE ATLAS/ATT&CK, required log sources, detection signals and clinical impact; (ii) a browser-based SIEM simulation with six scenarios, including indirect prompt injection and federated poisoning, for training and tabletop exercises; (iii) a deterministic synthetic labeled event dataset; and (iv) transparent baseline detection rules with an evaluation harness. Baseline results expose a concrete weakness in robust-statistics outlier detection for small federated cohorts. All artifacts are released under the MIT license with a persistent DOI to support teaching and reproducible follow-up work.
+Hospitals are deploying large language model (LLM) agents that read clinical documents and call tools, and they increasingly train diagnostic models across institutions with federated learning. Both expand the attack surface in ways that conventional security operations center (SOC) tooling does not model. Prompt injection hidden in clinical text can redirect an agent toward data exfiltration, and a single malicious federated participant can implant a backdoor in a shared model. We present Open SOC SIEM, an open, zero-install testbed that brings these AI-specific threats into the SOC workflow. Its contributions are (i) CLIN-AGENT, a five-class threat taxonomy for clinical AI deployments that maps each class to MITRE ATLAS/ATT&CK, required log sources, detection signals and clinical impact; (ii) a browser-based SIEM simulation with six scenarios, including indirect prompt injection and federated poisoning, for training and tabletop exercises; (iii) a deterministic synthetic labeled event dataset; and (iv) transparent baseline detection rules with an evaluation harness. Baseline results expose a concrete weakness in robust-statistics outlier detection for small federated cohorts. All artifacts are released under the MIT license with a persistent DOI to support teaching and reproducible follow-up work.
 
 ## Outline (6–8 pages, workshop/short-paper length)
 

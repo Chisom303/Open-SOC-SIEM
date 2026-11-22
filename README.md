@@ -1,26 +1,33 @@
-# Open-Clinic-SRA SIEM Demo
+# Open SOC SIEM
 
-**A zero-install simulation testbed, threat taxonomy and synthetic dataset for detecting prompt injection and federated learning poisoning against AI agents in healthcare.**
+**A zero-install security operations training platform for students and researchers.** Two browser tools, no installation:
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
-![version](https://img.shields.io/badge/version-1.0.0-green) ![license](https://img.shields.io/badge/license-MIT-blue)
+- **Attack Simulator** (`index.html`): watch six attacks unfold in a simulated SOC, including prompt injection against AI agents and federated learning poisoning, mapped to MITRE ATT&CK and ATLAS.
+- **Log Analyzer** (`analyzer.html`): upload real log files and get explained findings, with challenge mode and tunable rules for teaching.
+
+It also includes a threat taxonomy for clinical AI agents, a synthetic labeled dataset, baseline detectors and ready-made teaching labs.
+
+> Formerly released as *Open-Clinic-SRA SIEM Demo* (v1.0.x).
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24433065.svg)](https://doi.org/10.5281/zenodo.24433065)
+![version](https://img.shields.io/badge/version-1.1.0-green) ![license](https://img.shields.io/badge/license-MIT-blue)
 
 > **Cite as:**
-> Alozie, C. (2026). *Open-Clinic-SRA SIEM Demo: A zero-install simulation testbed for prompt injection and federated learning poisoning in healthcare AI agents* (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
+> Alozie, C. (2026). *Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer* (Version 1.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24433065
 >
 > BibTeX and other formats: use GitHub's **"Cite this repository"** button (generated from [`CITATION.cff`](CITATION.cff)).
 
-![Open-Clinic-SRA SIEM Demo screenshot](docs/screenshot.png)
+![Open SOC SIEM Attack Simulator screenshot](docs/screenshot.png)
 
 ---
 
 ## Run it in 2 minutes (no install)
 
-1. Download `index.html` (or open the live page: `https://chisom303.github.io/Open-Clinic-SRA-SIEM-Demo/`)
-2. Double-click it to open it in any modern browser
-3. Click **▶ Prompt Injection** or **▶ Federated Learning Poisoning**
+**Attack Simulator:** open `index.html` (or the live page: `https://chisom303.github.io/Open-SOC-SIEM/`) and click **▶ Prompt Injection** or **▶ Federated Learning Poisoning**.
 
-That's it. Nothing to install, and nothing leaves your machine.
+**Log Analyzer:** open `analyzer.html` (live: `https://chisom303.github.io/Open-SOC-SIEM/analyzer.html`), then drop in your own log files or click **Load all samples**.
+
+That's it. Nothing to install. A downloaded copy runs fully offline. The hosted page counts anonymous visits and scenario clicks with [GoatCounter](https://www.goatcounter.com), a privacy-friendly analytics service; no simulated or exported data is sent anywhere.
 
 To reproduce the dataset and the baseline results (Python 3.9+, standard library only):
 
@@ -33,11 +40,13 @@ python scripts/detect.py          # runs 5 baseline rules, prints precision/reca
 
 | Component | Path | What it's for |
 |---|---|---|
-| Interactive SOC simulation | `index.html` | Teaching, demos, tabletop exercises. Six scenarios, mapped to MITRE ATT&CK and MITRE ATLAS |
+| Attack Simulator | `index.html` | Teaching, demos, tabletop exercises. Six scenarios, mapped to MITRE ATT&CK and MITRE ATLAS |
 | Threat taxonomy | [`docs/taxonomy.md`](docs/taxonomy.md) | Five attack classes against clinical AI agents, each with log sources, detection signals and clinical impact |
 | Synthetic labeled dataset | [`data/`](data/) | 340 events (51 malicious, 16 attack episodes), JSONL + CSV, with a [data card](data/DATA_CARD.md) |
 | Baseline detectors | `scripts/detect.py` | Five transparent rules and an evaluation harness, a starting point to compare against |
 | Event export | **⬇ Export events** button | Saves every log and alert from a demo session as JSONL |
+| Log Analyzer | [`analyzer.html`](analyzer.html) | Upload your own log files (Linux auth/syslog, Apache/Nginx, JSON lines, CSV). It flags brute force, web scanning, injection attempts, prompt injection and more, and explains each finding with its MITRE technique. Runs entirely in the browser. |
+| Sample logs | [`samples/`](samples/) | Practice files with planted attacks: `auth.log`, `access.log`, `agent.jsonl` |
 | Teaching materials | [`TEACHING.md`](TEACHING.md) | A 50-minute lecture plan, three hands-on labs, discussion questions, and an [instructor key](docs/INSTRUCTOR_KEY.md) |
 
 ## Scenarios

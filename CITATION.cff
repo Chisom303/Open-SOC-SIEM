@@ -1,13 +1,13 @@
 cff-version: 1.2.0
 message: "If you use this software or dataset, please cite it as below."
 type: software
-title: "Open-Clinic-SRA SIEM Demo: A zero-install simulation testbed for prompt injection and federated learning poisoning in healthcare AI agents"
-version: 1.0.0
-date-released: 2026-11-21
+title: "Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer"
+version: 1.1.0
+date-released: 2026-11-22
 license: MIT
-repository-code: "https://github.com/Chisom303/Open-Clinic-SRA-SIEM-Demo"
-url: "https://chisom303.github.io/Open-Clinic-SRA-SIEM-Demo/"
-# doi: 10.5281/zenodo.XXXXXXX  (uncomment and fill in after the first Zenodo release)
+repository-code: "https://github.com/Chisom303/Open-SOC-SIEM"
+url: "https://chisom303.github.io/Open-SOC-SIEM/"
+doi: 10.5281/zenodo.24433065
 authors:
   - family-names: Alozie
     given-names: Chisom
@@ -16,6 +16,8 @@ authors:
 keywords:
   - SIEM
   - security operations
+  - log analysis
+  - cybersecurity education
   - prompt injection
   - LLM agents
   - federated learning
@@ -24,8 +26,11 @@ keywords:
   - MITRE ATLAS
   - MITRE ATT&CK
 abstract: >-
-  An open, zero-install browser simulation of a security operations center for a
-  healthcare environment that uses LLM agents and federated learning. It includes six
-  attack scenarios mapped to MITRE ATT&CK and MITRE ATLAS, a five-class threat taxonomy
-  for clinical AI agents, a deterministic synthetic labeled event dataset, and transparent
-  baseline detection rules with an evaluation harness.
+  Open SOC SIEM is a zero-install, browser-based security operations training
+  platform. Its Attack Simulator plays six attack scenarios in a simulated SOC,
+  including indirect prompt injection against AI agents and federated learning
+  poisoning, mapped to MITRE ATT&CK and MITRE ATLAS. Its Log Analyzer lets users
+  upload Linux, web server, JSON and CSV logs and returns explained findings with
+  a challenge mode and tunable detection rules for teaching. The release also
+  includes a threat taxonomy for clinical AI agents, a deterministic synthetic
+  labeled dataset, baseline detectors and teaching materials.

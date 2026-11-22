@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Open-Clinic-SRA SIEM Demo v1.0.0 | Simulated SOC for AI-Agent Threats in Healthcare</title>
+<title>Open SOC SIEM | Attack Simulator v1.1.0</title>
 <style>
 body{background:#0a0e14;color:#c5d1de;font-family:Consolas,Menlo,monospace;margin:0}
 .header{background:#111a2b;padding:12px 15px;border-bottom:2px solid #00ff88;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
@@ -39,11 +39,13 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
 #citeBox .card,#exportBox .card{background:#111a2b;border:1px solid #00ff88;padding:18px;max-width:640px;font-size:12px;line-height:1.5}
 #citeBox pre{white-space:pre-wrap;background:#000;padding:10px}
 </style>
+<!-- GoatCounter: anonymous visit + scenario-click counts on the hosted page. Replace YOURCODE with your GoatCounter site code. -->
+<script data-goatcounter="https://YOURCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 <div class="header">
-  <div class="logo">● OPEN-CLINIC-SRA SOC · SIEM DEMO <span class="small">v1.0.0</span> <span class="sim">[SIMULATION · SYNTHETIC DATA · OFFLINE]</span></div>
-  <div><span id="time">00:00:00</span> | Agents: 12 | EPS: <span id="eps">47</span></div>
+  <div class="logo">● OPEN SOC SIEM · ATTACK SIMULATOR <span class="small">v1.1.0</span> <span class="sim">[SIMULATION · SYNTHETIC DATA · OFFLINE]</span></div>
+  <div><a href="analyzer.html" style="color:#00ff88;margin-right:14px">Log Analyzer: analyze your own logs →</a><span id="time">00:00:00</span> | Agents: 12 | EPS: <span id="eps">47</span></div>
 </div>
 <div style="padding:8px 10px;background:#0f1a2e;border-bottom:1px solid #1f2d4a">
   <button onclick="startAttack('bruteforce')">▶ Brute Force</button>
@@ -90,7 +92,7 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
 <div id="citeBox" onclick="if(event.target.id==='citeBox')toggleCite(false)">
   <div class="card">
     <b>Cite this software</b>
-    <pre id="citeText">Alozie, C. (2026). Open-Clinic-SRA SIEM Demo: A zero-install simulation testbed for prompt injection and federated learning poisoning in healthcare AI agents (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX</pre>
+    <pre id="citeText">Alozie, C. (2026). Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer (Version 1.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24433065</pre>
     <button onclick="copyText('citeText',this)">Copy</button>
     <button class="ghost" onclick="toggleCite(false)">Close</button>
   </div>
@@ -108,7 +110,7 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
 </div>
 
 <script>
-const VERSION='1.0.0';
+const VERSION='1.1.0';
 let alerts=0, startTime=0, events=[], timers=[], runId=0;
 const tactics=["Initial Access","Execution","Persistence","Privilege Escalation","Defense Evasion","Credential Access","Discovery","Lateral Movement","Collection","Exfiltration","Command & Control","Impact"];
 // ATLAS technique IDs. Verify against the ATLAS release you cite (atlas.mitre.org).
@@ -118,6 +120,7 @@ const atlas=[
   {id:"AML.T0020",name:"Poison Training Data"},
   {id:"AML.T0018",name:"Manipulate AI Model (backdoor)"}
 ];
+function track(path,title){try{if(window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:path,title:title,event:true});}catch(e){}}
 const key=s=>s.replace(/[^A-Za-z0-9]/g,'');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -171,6 +174,7 @@ function startAttack(type){
   document.getElementById('status').innerText='Simulated attack in progress: '+type;
   document.getElementById('eps').innerText=Math.floor(Math.random()*200+200);
   record('scenario_start',{scenario:type,version:VERSION});
+  track('scenario-'+type,'Scenario: '+type);
   const S={scenario:type,malicious:true};
 
   if(type==='bruteforce'){
@@ -244,6 +248,7 @@ function exportEvents(){
   document.getElementById('exportText').value=events.map(e=>JSON.stringify(e)).join('\n')+'\n';
   document.getElementById('exportNote').innerText=events.length+' events. Copy them, or download a .jsonl file (download works when the page is opened as a local file).';
   document.getElementById('exportBox').style.display='flex';
+  track('export-events','Export events');
 }
 function downloadEvents(){
   try{const blob=new Blob([document.getElementById('exportText').value],{type:'application/x-ndjson'});
@@ -256,7 +261,7 @@ function copyText(id,btn){
   const fallback=()=>{if(t.select){t.select();try{document.execCommand('copy');ok();}catch(e){btn.innerText='Select + Ctrl/Cmd+C';}}else btn.innerText='Select + Ctrl/Cmd+C';};
   try{navigator.clipboard.writeText(v).then(ok,fallback);}catch(e){fallback();}
 }
-function toggleCite(on){document.getElementById('citeBox').style.display=on?'flex':'none';}
+function toggleCite(on){if(on)track('cite-open','Cite box opened');document.getElementById('citeBox').style.display=on?'flex':'none';}
 setInterval(()=>{document.getElementById('time').innerText=new Date().toLocaleTimeString();
   if(Math.random()>0.7){const h=['WIN-CLINIC-01','UBUNTU-EHR-02','LLM-AGENT-API','FL-SERVER'][Math.floor(Math.random()*4)];log(`Agent heartbeat - ${h} - OK`,{host:h});}},1000);
 init();

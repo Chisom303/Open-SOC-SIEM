@@ -1,13 +1,12 @@
 # Publishing checklist (delete this file before release if you like)
 
 ## 0. Fill placeholders (find and replace across the repo)
-- `zenodo.XXXXXXX` → after step 3 (Zenodo shows the DOI after the first release)
 
 ## 1. ORCID (5 min)
 Register free at orcid.org and add the ORCID to GitHub and Zenodo profiles.
 
 ## 2. GitHub
-- Create a public repo `Open-Clinic-SRA-SIEM-Demo` and push these files
+- Repo: `Open-SOC-SIEM` (renamed from `Open-Clinic-SRA-SIEM-Demo`; GitHub redirects the old repo links, but not the old GitHub Pages address)
 - Settings → Pages → deploy from `main` / root, so `index.html` gets a live URL
 - Add topics: `siem`, `prompt-injection`, `federated-learning`, `healthcare-security`, `mitre-atlas`
 - Check that the "Cite this repository" button appears (from `CITATION.cff`)
