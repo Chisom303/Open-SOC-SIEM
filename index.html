@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Open SOC SIEM | Attack Simulator v1.1.0</title>
+<title>Open SOC SIEM | Attack Simulator v2.0.0</title>
 <style>
 body{background:#0a0e14;color:#c5d1de;font-family:Consolas,Menlo,monospace;margin:0}
 .header{background:#111a2b;padding:12px 15px;border-bottom:2px solid #00ff88;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
@@ -44,7 +44,7 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
 </head>
 <body>
 <div class="header">
-  <div class="logo">● OPEN SOC SIEM · ATTACK SIMULATOR <span class="small">v1.1.0</span> <span class="sim">[SIMULATION · SYNTHETIC DATA · OFFLINE]</span></div>
+  <div class="logo">● OPEN SOC SIEM · ATTACK SIMULATOR <span class="small">v2.0.0</span> <span class="sim">[SIMULATION · SYNTHETIC DATA · OFFLINE]</span></div>
   <div><a href="analyzer.html" style="color:#00ff88;margin-right:14px">Log Analyzer: analyze your own logs →</a><span id="time">00:00:00</span> | Agents: 12 | EPS: <span id="eps">47</span></div>
 </div>
 <div style="padding:8px 10px;background:#0f1a2e;border-bottom:1px solid #1f2d4a">
@@ -92,7 +92,7 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
 <div id="citeBox" onclick="if(event.target.id==='citeBox')toggleCite(false)">
   <div class="card">
     <b>Cite this software</b>
-    <pre id="citeText">Alozie, C. (2026). Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer (Version 1.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24433065</pre>
+    <pre id="citeText">Alozie, C. (2026). Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer (Version 2.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24433065</pre>
     <button onclick="copyText('citeText',this)">Copy</button>
     <button class="ghost" onclick="toggleCite(false)">Close</button>
   </div>
@@ -110,7 +110,7 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
 </div>
 
 <script>
-const VERSION='1.1.0';
+const VERSION='2.0.0';
 let alerts=0, startTime=0, events=[], timers=[], runId=0;
 const tactics=["Initial Access","Execution","Persistence","Privilege Escalation","Defense Evasion","Credential Access","Discovery","Lateral Movement","Collection","Exfiltration","Command & Control","Impact"];
 // ATLAS technique IDs. Verify against the ATLAS release you cite (atlas.mitre.org).
