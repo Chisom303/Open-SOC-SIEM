@@ -7,11 +7,12 @@ date-released: 2026-11-21
 license: MIT
 repository-code: "https://github.com/Chisom303/Open-Clinic-SRA-SIEM-Demo"
 url: "https://chisom303.github.io/Open-Clinic-SRA-SIEM-Demo/"
-doi: 10.5281/zenodo.XXXXXXX
+# doi: 10.5281/zenodo.XXXXXXX  (uncomment and fill in after the first Zenodo release)
 authors:
   - family-names: Alozie
     given-names: Chisom
-    orcid: "https://orcid.org/0000-0000-0000-0000"
+    orcid: "https://orcid.org/0009-0000-0309-3650"
+    affiliation: "University of the Cumberlands"
 keywords:
   - SIEM
   - security operations

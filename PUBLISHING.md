@@ -1,8 +1,6 @@
 # Publishing checklist (delete this file before release if you like)
 
 ## 0. Fill placeholders (find and replace across the repo)
-- `0000-0000-0000-0000` → your ORCID
-- `YOUR AFFILIATION OR 'Independent Researcher'` in `.zenodo.json`
 - `zenodo.XXXXXXX` → after step 3 (Zenodo shows the DOI after the first release)
 
 ## 1. ORCID (5 min)
