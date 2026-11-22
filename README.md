@@ -45,7 +45,7 @@ python scripts/detect.py          # runs 5 baseline rules, prints precision/reca
 | Synthetic labeled dataset | [`data/`](data/) | 340 events (51 malicious, 16 attack episodes), JSONL + CSV, with a [data card](data/DATA_CARD.md) |
 | Baseline detectors | `scripts/detect.py` | Five transparent rules and an evaluation harness, a starting point to compare against |
 | Event export | **⬇ Export events** button | Saves every log and alert from a demo session as JSONL |
-| Log Analyzer | [`analyzer.html`](analyzer.html) | Upload your own log files (Linux auth/syslog, Apache/Nginx, JSON lines, CSV). It flags brute force, web scanning, injection attempts, prompt injection and more, and explains each finding with its MITRE technique. Runs entirely in the browser. |
+| Log Analyzer | [`analyzer.html`](analyzer.html) | Upload your own log files (Linux auth/syslog, Apache/Nginx, JSON lines, CSV). It flags brute force, web scanning, injection attempts, prompt injection and more, explains each finding with its MITRE technique, and charts the results. Download the report as HTML (printable to PDF) or Markdown, or the findings and events as CSV. Runs entirely in the browser. |
 | Sample logs | [`samples/`](samples/) | Practice files with planted attacks: `auth.log`, `access.log`, `agent.jsonl` |
 | Teaching materials | [`TEACHING.md`](TEACHING.md) | A 50-minute lecture plan, three hands-on labs, discussion questions, and an [instructor key](docs/INSTRUCTOR_KEY.md) |
 

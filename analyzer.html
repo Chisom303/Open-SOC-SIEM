@@ -81,6 +81,17 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
 #modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:16px;z-index:5}
 #modal .panel{width:min(760px,100%)}
 #modal textarea{width:100%;height:320px;font:13px 'IBM Plex Mono',monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;margin:16px 0}
+.chart h3{font-size:16px;margin:0 0 4px}.chart .cap{font-size:13px;color:var(--muted);margin:0 0 12px}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:14px}
+.bars.wide .bar{grid-template-columns:minmax(0,15em) minmax(0,1fr) auto}
+.bar .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .trk{height:14px;background:color-mix(in srgb,var(--line) 60%,transparent);border-radius:4px;overflow:hidden;display:flex}
+.bar .seg{height:100%}
+.bar .val{font-variant-numeric:tabular-nums;font-weight:600;min-width:2.5em;text-align:right}
+.dl{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.dl .note{font-size:14px;color:var(--muted)}
 footer{color:var(--muted);font-size:14px;padding:28px 0 40px}
 footer a{color:var(--accent)}
 .toggle{display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px}
@@ -116,12 +127,25 @@ footer a{color:var(--accent)}
   <p id="status" class="privacy" style="margin:10px 0 0" aria-live="polite">No logs loaded yet.</p>
 </section>
 
-<section class="section row" style="justify-content:space-between">
+<section class="section row">
   <label class="toggle"><input type="checkbox" id="challenge"> Challenge mode: investigate before the findings are revealed</label>
-  <button id="report">Copy findings report</button>
+</section>
+
+<section class="panel section" id="download">
+  <h2>Download the report</h2>
+  <div class="dl">
+    <button class="primary" data-dl="html">Report (HTML, printable to PDF)</button>
+    <button data-dl="md">Report (Markdown)</button>
+    <button data-dl="findings">Findings (CSV)</button>
+    <button data-dl="events">Events (CSV)</button>
+    <button id="report">Copy as text</button>
+  </div>
+  <p class="note" id="dl-note" style="font-size:14px;color:var(--muted);margin:10px 0 0">Load logs to enable downloads. The HTML report includes the charts and opens in any browser; use its Print button to save a PDF.</p>
 </section>
 
 <div class="cards" id="cards"></div>
+
+<section class="charts" id="charts" aria-label="Charts"></section>
 
 <section class="panel section">
   <h2 id="tl-title">Event timeline</h2>
@@ -404,7 +428,81 @@ function renderTable(){
   $('#prev').disabled=S.page===0;$('#next').disabled=S.page>=pages-1;
 }
 function renderFiles(){const sel=$('#ffile'),cur=sel.value;sel.innerHTML='<option value="">All files</option>'+S.files.map(f=>`<option${f===cur?' selected':''}>${esc(f)}</option>`).join('');}
-function renderAll(){detect();if(S.sel!=null&&S.sel>=S.findings.length){S.sel=null;S.ids=null;}renderCards();renderTimeline();renderFindings();renderDetail();renderIPs();renderFiles();renderTable();}
+/* ---------- charts ---------- */
+const SEVC={critical:'var(--crit)',high:'var(--high)',medium:'var(--med)',low:'var(--low)'};
+function bars(rows,opts={}){if(!rows.length)return `<p class="empty">${opts.empty||'Nothing to show yet.'}</p>`;
+  const max=Math.max(...rows.map(r=>r.total))||1;
+  return `<div class="bars${opts.wide?' wide':''}">${rows.map(r=>`<div class="bar"><span class="lab${opts.mono?' mono':''}" title="${esc(r.label)}">${esc(r.label)}</span><span class="trk">${r.segs.map(g=>g.v?`<span class="seg" style="width:${(g.v/max*100).toFixed(2)}%;background:${g.c}"></span>`:'').join('')}</span><span class="val">${r.total.toLocaleString()}</span></div>`).join('')}</div>`;}
+function chartData(){
+  const h=hidden(),ev=S.events;
+  const sev=['critical','high','medium','low'].map(k=>{const n=S.findings.filter(f=>f.sev===k).length;return {label:k[0].toUpperCase()+k.slice(1),total:n,segs:[{v:n,c:SEVC[k]}]};}).filter(r=>r.total);
+  const tm=new Map();S.findings.forEach(f=>{const k=f.tech[0]+' '+f.tech[1].replace(/ \(MITRE ATLAS\)/,'');const r=tm.get(k)||{label:k,total:0,segs:[{v:0,c:'var(--accent)'}]};r.total+=f.ids.length;r.segs[0].v+=f.ids.length;tm.set(k,r);});
+  const tech=[...tm.values()].sort((a,b)=>b.total-a.total).slice(0,8);
+  const im=new Map();ev.forEach((e,i)=>{if(!e.ip)return;const r=im.get(e.ip)||{label:e.ip,total:0,f:0};r.total++;if(!h&&S.flagged.has(i))r.f++;im.set(e.ip,r);});
+  const ips=[...im.values()].sort((a,b)=>b.total-a.total).slice(0,8).map(r=>({label:r.label,total:r.total,segs:[{v:r.f,c:'var(--crit)'},{v:r.total-r.f,c:'var(--low)'}]}));
+  const ty=new Map();ev.forEach(e=>ty.set(e.type,(ty.get(e.type)||0)+1));
+  const types=[...ty].sort((a,b)=>b[1]-a[1]).slice(0,8).map(([k,v])=>({label:k,total:v,segs:[{v,c:'var(--accent)'}]}));
+  const st=new Map();ev.forEach(e=>{if(e.status)st.set(e.status,(st.get(e.status)||0)+1);});
+  const stc=c=>c>=500?'var(--crit)':c>=400?'var(--high)':c>=300?'var(--med)':'var(--accent)';
+  const status=[...st].sort((a,b)=>a[0]-b[0]).map(([k,v])=>({label:String(k),total:v,segs:[{v,c:stc(k)}]}));
+  return {sev,tech,ips,types,status};
+}
+function renderCharts(){
+  const box=$('#charts');if(!S.events.length){box.innerHTML='';return;}
+  const d=chartData(),h=hidden(),hid='<p class="empty">Hidden in challenge mode until you reveal the findings.</p>';
+  const card=(t,c,body)=>`<div class="panel chart"><h3>${t}</h3><p class="cap">${c}</p>${body}</div>`;
+  box.innerHTML=card('Findings by severity','How many findings at each level.',h?hid:bars(d.sev,{empty:'No findings.'}))+
+    card('MITRE techniques detected','Events matched, grouped by technique.',h?hid:bars(d.tech,{wide:true,empty:'No techniques matched.'}))+
+    card('Top source IP addresses',h?'Events per address.':'Events per address. Red = events that are part of a finding.',bars(d.ips,{mono:true,empty:'No IP addresses found.'}))+
+    card('Events by log source','Which programs or log types produced the events.',bars(d.types))+
+    (d.status.length?card('Web response codes','2xx success, 3xx redirect, 4xx client error, 5xx server error.',bars(d.status,{mono:true})):'');
+}
+
+/* ---------- downloads ---------- */
+let dlNs=null;
+if(window.claude&&typeof window.claude.use==='function'){dlNs=window.claude.use('downloads').catch(()=>null);}
+function note(t){$('#dl-note').textContent=t;}
+async function saveFile(filename,data,mime){
+  const ns=dlNs?await dlNs:null;
+  if(ns){try{await ns.save({filename,data});note(`Saved ${filename}.`);}catch(e){note(e&&e.code==='declined'?'Download cancelled.':`Could not save ${filename} here (${e&&e.code||'unavailable'}). Try "Copy as text", or open the page from GitHub Pages.`);}return;}
+  try{const url=URL.createObjectURL(new Blob([data],{type:mime}));const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);note(`Downloaded ${filename}.`);}
+  catch(e){note('This browser blocked the download. Use "Copy as text" instead.');}
+}
+const csvCell=v=>{const s=String(v??'');return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
+const csv=rows=>rows.map(r=>r.map(csvCell).join(',')).join('\r\n')+'\r\n';
+function stamp(){return new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');}
+function reportMd(){
+  const lines=[`# Log analysis report`,``,`Generated by Open SOC SIEM Log Analyzer on ${new Date().toISOString().slice(0,10)}`,``,`Files: ${S.files.join(', ')}`,`Events parsed: ${S.events.length}`,``,`## Findings (${S.findings.length})`,``];
+  S.findings.forEach((f,k)=>{lines.push(`### ${k+1}. [${f.sev.toUpperCase()}] ${f.title}`,``,f.summary,``,`- MITRE: ${f.tech[0]} ${f.tech[1]} (${f.tech[2]})`,`- Evidence events: ${f.ids.length}`,``,`**What happened.** ${f.what}`,``,`**Why it matters.** ${f.why}`,``,`**What to check next.** ${f.next}`,``,'```',...f.ids.slice(0,5).map(i=>S.events[i].raw),'```',``);});
+  lines.push(`Rule settings: brute force ${S.p.bf} fails / ${S.p.bfw}s; web scan ${S.p.nf} 404s / ${S.p.nfw}s.`);return lines.join('\n')+'\n';}
+function reportHtml(){
+  const d=chartData(),ts=S.events.map(e=>e.ts).filter(Boolean).sort((a,b)=>a-b);
+  const css=`body{font:15px/1.55 'IBM Plex Sans',system-ui,sans-serif;color:#16191c;background:#fff;margin:0}main{max-width:960px;margin:0 auto;padding:32px 24px}h1{font-size:30px;margin:0 0 4px}h2{font-size:20px;margin:28px 0 10px;border-bottom:1px solid #e1e3e0;padding-bottom:6px}h3{font-size:17px;margin:20px 0 4px}.meta{color:#5b636b}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.box{border:1px solid #e1e3e0;border-radius:8px;padding:14px}.box h4{margin:0 0 10px;font-size:15px}.bars{display:flex;flex-direction:column;gap:6px}.bar{display:grid;grid-template-columns:9em 1fr auto;gap:8px;align-items:center;font-size:13px}.bars.wide .bar{grid-template-columns:15em 1fr auto}.lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.trk{height:12px;background:#eef0ee;border-radius:3px;overflow:hidden;display:flex}.seg{height:100%}.val{font-weight:600;text-align:right;min-width:2.5em}.sev{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:99px;color:#fff}.critical{background:#c81e3a}.high{background:#c2410c}.medium{background:#a16207}.low{background:#4b5563}pre{background:#f7f7f5;border:1px solid #e1e3e0;border-radius:6px;padding:8px;font:12px 'IBM Plex Mono',monospace;white-space:pre-wrap;word-break:break-all}.f{break-inside:avoid;border-top:1px solid #e1e3e0;padding-top:6px}.btn{font:600 14px sans-serif;padding:10px 16px;border-radius:6px;border:0;background:#0f766e;color:#fff;cursor:pointer}footer{color:#5b636b;font-size:13px;margin-top:32px}@media print{.btn{display:none}main{padding:0}}`;
+  const colors={'var(--crit)':'#c81e3a','var(--high)':'#c2410c','var(--med)':'#a16207','var(--low)':'#4b5563','var(--accent)':'#0f766e'};
+  const fix=html=>html.replace(/var\(--(crit|high|med|low|accent)\)/g,m=>colors[m]).replace(/class="empty"/g,'class="meta"');
+  const box=(t,b)=>`<div class="box"><h4>${t}</h4>${fix(b)}</div>`;
+  const fx=S.findings.map((f,k)=>`<div class="f"><h3>${k+1}. <span class="sev ${f.sev}">${f.sev}</span> ${esc(f.title)}</h3><p>${esc(f.summary)}</p><p class="meta">MITRE: <a href="${esc(f.tech[2])}">${esc(f.tech[0])} ${esc(f.tech[1])}</a> · ${f.ids.length} event${f.ids.length>1?'s':''}</p><p><b>What happened.</b> ${esc(f.what)}</p><p><b>Why it matters.</b> ${esc(f.why)}</p><p><b>What to check next.</b> ${esc(f.next)}</p><pre>${esc(f.ids.slice(0,5).map(i=>S.events[i].raw).join('\n'))}</pre></div>`).join('');
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Log analysis report ${new Date().toISOString().slice(0,10)}</title><style>${css}</style></head><body><main>
+<h1>Log analysis report</h1><p class="meta">Generated by Open SOC SIEM Log Analyzer on ${esc(new Date().toISOString().replace('T',' ').slice(0,16))} UTC</p>
+<button class="btn" onclick="window.print()">Print or save as PDF</button>
+<h2>Summary</h2><p><b>${S.events.length.toLocaleString()}</b> events from <b>${S.files.length}</b> file${S.files.length>1?'s':''} (${esc(S.files.join(', '))}), covering ${ts.length?esc(fmt(ts[0]))+' to '+esc(fmt(ts.at(-1)))+' UTC':'unknown times'}. <b>${S.findings.length}</b> finding${S.findings.length===1?'':'s'}: ${['critical','high','medium','low'].map(k=>`${S.findings.filter(f=>f.sev===k).length} ${k}`).join(', ')}.</p>
+<h2>Charts</h2><div class="grid">${box('Findings by severity',bars(d.sev,{empty:'No findings.'}))}${box('MITRE techniques detected',bars(d.tech,{wide:true,empty:'None.'}))}${box('Top source IP addresses (red = in a finding)',bars(d.ips,{empty:'None.'}))}${box('Events by log source',bars(d.types))}${d.status.length?box('Web response codes',bars(d.status)):''}</div>
+<h2>Findings</h2>${fx||'<p class="meta">No findings with the rule settings used.</p>'}
+<h2>Rule settings</h2><p>Brute force: ${S.p.bf} failed logins within ${S.p.bfw} s. Web scanning: ${S.p.nf} 404 responses within ${S.p.nfw} s.</p>
+<footer>Open SOC SIEM Log Analyzer. Teaching rules only; confirm findings before acting. Cite: Alozie, C. (2026). Open SOC SIEM (Version 2.0.0). Zenodo. https://doi.org/10.5281/zenodo.24433065</footer>
+</main></body></html>`;}
+document.querySelectorAll('[data-dl]').forEach(b=>b.onclick=()=>{
+  if(!S.events.length){note('Load logs first, then download the report.');return;}
+  if(hidden()){note('Reveal the findings first (challenge mode is on).');return;}
+  const k=b.dataset.dl,st=stamp();track('download-'+k,'Download '+k);
+  if(k==='html')saveFile(`log-report-${st}.html`,reportHtml(),'text/html');
+  if(k==='md')saveFile(`log-report-${st}.md`,reportMd(),'text/markdown');
+  if(k==='findings')saveFile(`findings-${st}.csv`,csv([['severity','title','rule','mitre_id','mitre_name','event_count','summary','next_step'],...S.findings.map(f=>[f.sev,f.title,f.rule,f.tech[0],f.tech[1],f.ids.length,f.summary,f.next])]),'text/csv');
+  if(k==='events'){const rules=new Map();S.findings.forEach(f=>f.ids.forEach(i=>{rules.set(i,(rules.get(i)?rules.get(i)+';':'')+f.rule);}));
+    saveFile(`events-${st}.csv`,csv([['time_utc','file','line','type','source_ip','user','in_finding','finding_rules','message'],...S.events.map((e,i)=>[e.ts?e.ts.toISOString():'',e.file,e.line,e.type,e.ip||'',e.user||'',rules.has(i)?'yes':'no',rules.get(i)||'',e.msg])]),'text/csv');}
+});
+
+function renderAll(){detect();if(S.sel!=null&&S.sel>=S.findings.length){S.sel=null;S.ids=null;}renderCards();renderCharts();renderTimeline();renderFindings();renderDetail();renderIPs();renderFiles();renderTable();}
 
 /* ---------- loading ---------- */
 function ingest(name,text){const r=parseText(text,name);S.events.push(...r.events);if(!S.files.includes(name))S.files.push(name);
@@ -427,11 +525,9 @@ $('#q').oninput=()=>{S.page=0;renderTable();};$('#ffile').onchange=()=>{S.page=0
 $('#clearsel').onclick=()=>{S.ids=null;S.sel=null;$('#clearsel').hidden=true;renderFindings();renderDetail();renderTable();};
 $('#prev').onclick=()=>{S.page--;renderTable();};$('#next').onclick=()=>{S.page++;renderTable();};
 $('#report').onclick=()=>{
-  if(!S.events.length){$('#status').textContent='Load logs first, then copy the report.';return;}
-  const lines=[`# Log analysis report`,``,`Generated by Open SOC SIEM Log Analyzer on ${new Date().toISOString().slice(0,10)}`,``,`Files: ${S.files.join(', ')}`,`Events parsed: ${S.events.length}`,``,`## Findings (${S.findings.length})`,``];
-  S.findings.forEach((f,k)=>{lines.push(`### ${k+1}. [${f.sev.toUpperCase()}] ${f.title}`,``,f.summary,``,`- MITRE: ${f.tech[0]} ${f.tech[1]}`,`- Evidence events: ${f.ids.length}`,`- Next step: ${f.next}`,``,'```',...f.ids.slice(0,5).map(i=>S.events[i].raw),'```',``);});
-  lines.push(`Rule settings: brute force ${S.p.bf} fails / ${S.p.bfw}s; web scan ${S.p.nf} 404s / ${S.p.nfw}s.`);
-  $('#m-text').value=lines.join('\n');$('#modal').style.display='flex';track('report','Report copied');};
+  if(!S.events.length){note('Load logs first, then copy the report.');return;}
+  if(hidden()){note('Reveal the findings first (challenge mode is on).');return;}
+  $('#m-text').value=reportMd();$('#modal').style.display='flex';track('report','Report copied');};
 $('#m-close').onclick=()=>$('#modal').style.display='none';
 $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').style.display='none';};
 $('#m-copy').onclick=()=>{const t=$('#m-text'),b=$('#m-copy');const ok=()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500);};
