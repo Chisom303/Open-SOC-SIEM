@@ -32,9 +32,9 @@ a{color:var(--accent)}
 nav{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:center;justify-content:space-between;padding:18px 0}
 .brand{font-weight:700;font-size:18px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
 .brand i{width:12px;height:12px;border-radius:50%;background:var(--accent);display:inline-block;box-shadow:0 0 0 4px var(--accent-soft)}
-.links{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:15px}
-.links a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
-.links a:hover{color:var(--ink)}
+.links{display:flex;flex-wrap:wrap;gap:8px 10px;font-size:15px}
+.links a{color:var(--accent);font-weight:600;text-decoration:none;min-height:44px;display:inline-flex;align-items:center;padding:0 16px;border:1.5px solid var(--accent);border-radius:8px;background:var(--panel)}
+.links a:hover{background:var(--accent);color:var(--accent-ink)}
 .hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,4vw,56px);align-items:center;padding:clamp(20px,4vw,48px) 0 clamp(28px,5vw,64px)}
 h1{font-size:clamp(32px,4.4vw,50px);line-height:1.05;margin:0 0 16px;text-wrap:balance;letter-spacing:-.01em}
 h1 .tag{display:block;font-weight:500;font-size:.58em;line-height:1.2;color:var(--muted);margin-top:12px}
@@ -114,7 +114,6 @@ code{font-family:'IBM Plex Mono',monospace;font-size:.92em}
     <a href="analyzer.html">Log Analyzer</a>
     <a href="#instructors">For instructors</a>
     <a href="simulator.html">Attack Simulator</a>
-    <a href="https://github.com/Chisom303/Open-SOC-SIEM">GitHub</a>
   </div>
 </nav>
 
@@ -237,7 +236,7 @@ sshd: Accepted password for admin from 203.0.113.45</pre>
 <div class="wrap">
   <p>Copyright © 2026 Chisom Alozie. Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. Versions up to 2.1 were released under the MIT License.</p>
   <p>Cite as: Alozie, C. (2026). <i>Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer</i> (Version 2.2) [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.24448612">https://doi.org/10.5281/zenodo.24448612</a></p>
-  <p><a href="analyzer.html">Log Analyzer</a> · <a href="simulator.html">Attack Simulator</a> · <a href="https://github.com/Chisom303/Open-SOC-SIEM">Source code</a> · All bundled data is synthetic. The hosted pages count anonymous visits and collect no log data.</p>
+  <p><a href="analyzer.html">Log Analyzer</a> · <a href="simulator.html">Attack Simulator</a> · All bundled data is synthetic. The hosted pages count anonymous visits and collect no log data.</p>
 </div>
 </footer>
 <script>

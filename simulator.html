@@ -13,6 +13,7 @@
 <style>
 body{background:#0a0e14;color:#c5d1de;font-family:Consolas,Menlo,monospace;margin:0}
 .header{background:#111a2b;padding:12px 15px;border-bottom:2px solid #38b6ff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.navbtn{display:inline-block;color:#38b6ff;border:1.5px solid #38b6ff;border-radius:6px;padding:5px 12px;margin:4px 10px 4px 0;text-decoration:none;font-weight:bold}.navbtn:hover{background:#38b6ff;color:#0b1220}
 .logo{color:#38b6ff;font-weight:bold;font-size:17px}
 .sim{color:#ffcc00}
 .grid{display:grid;grid-template-columns:270px 1fr 340px;height:calc(100vh - 110px)}
@@ -51,7 +52,7 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
 <body>
 <div class="header">
   <div class="logo">● OPEN SOC SIEM · ATTACK SIMULATOR <span class="small">v2.2</span> <span class="sim">[SIMULATION · SYNTHETIC DATA · OFFLINE]</span></div>
-  <div><a href="index.html" style="color:#9fb3c8;margin-right:14px">&larr; Home</a><a href="analyzer.html" style="color:#38b6ff;margin-right:14px">Log Analyzer: analyze your own logs →</a><span id="time">00:00:00</span> | Agents: 12 | EPS: <span id="eps">47</span></div>
+  <div><a class="navbtn" href="index.html">&larr; Home</a><a class="navbtn" href="analyzer.html">Log Analyzer: analyze your own logs →</a><span id="time">00:00:00</span> | Agents: 12 | EPS: <span id="eps">47</span></div>
 </div>
 <div style="padding:8px 10px;background:#0f1a2e;border-bottom:1px solid #1f2d4a">
   <button onclick="startAttack('bruteforce')">▶ Brute Force</button>
