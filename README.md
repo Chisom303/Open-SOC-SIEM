@@ -9,11 +9,11 @@ It also includes a threat taxonomy for clinical AI agents, a synthetic labeled d
 
 > Formerly released as *Open-Clinic-SRA SIEM Demo* (v1.0.x).
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24448612.svg)](https://doi.org/10.5281/zenodo.24448612)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24484803.svg)](https://doi.org/10.5281/zenodo.24484803)
 ![version](https://img.shields.io/badge/version-2.2-green) ![license](https://img.shields.io/badge/license-Apache--2.0-blue)
 
 > **Cite as:**
-> Alozie, C. (2026). *Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer* (Version 2.2) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24448612
+> Alozie, C. (2026). *Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer* (Version 2.2) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24484803
 >
 > BibTeX and other formats: use GitHub's **"Cite this repository"** button (generated from [`CITATION.cff`](CITATION.cff)).
 

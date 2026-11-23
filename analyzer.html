@@ -134,8 +134,8 @@ footer a{color:var(--accent)}
 .section{margin:16px 0}
 @media(max-width:600px){table{font-size:13px}.hide-sm{display:none}}
 </style>
-<!-- GoatCounter: anonymous visit counts on the hosted page only. Log contents are never sent. Replace YOURCODE with your GoatCounter site code. -->
-<script data-goatcounter="https://YOURCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- GoatCounter: anonymous visit counts on the hosted page only. Log contents are never sent. -->
+<script data-goatcounter="https://open-soc-siem.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -291,7 +291,7 @@ footer a{color:var(--accent)}
 </details>
 
 <footer>
-  The Log Analyzer is part of <a href="index.html">Open SOC SIEM</a>, alongside the <a href="simulator.html">Attack Simulator</a>, by Chisom Alozie. Cite as: Alozie, C. (2026). Open SOC SIEM (Version 2.2). Zenodo. https://doi.org/10.5281/zenodo.24448612. Licensed under the Apache License, Version 2.0. Detection rules are simple teaching rules, not a replacement for a production SIEM. Sample logs use reserved documentation IP ranges and invented hosts.
+  The Log Analyzer is part of <a href="index.html">Open SOC SIEM</a>, alongside the <a href="simulator.html">Attack Simulator</a>, by Chisom Alozie. Cite as: Alozie, C. (2026). Open SOC SIEM (Version 2.2). Zenodo. https://doi.org/10.5281/zenodo.24484803. Licensed under the Apache License, Version 2.0. Detection rules are simple teaching rules, not a replacement for a production SIEM. Sample logs use reserved documentation IP ranges and invented hosts.
 </footer>
 </div>
 
@@ -597,7 +597,7 @@ function reportHtml(){
 <h2>Charts</h2><div class="grid">${box('Findings by severity',bars(d.sev,{empty:'No findings.'}))}${box('MITRE techniques detected',bars(d.tech,{wide:true,empty:'None.'}))}${box('Top source IP addresses (red = in a finding)',bars(d.ips,{empty:'None.'}))}${box('Events by log source',bars(d.types))}${d.status.length?box('Web response codes',bars(d.status)):''}</div>
 <h2>Findings</h2>${fx||'<p class="meta">No findings with the rule settings used.</p>'}
 <h2>Rule settings</h2><p>Brute force: ${S.p.bf} failed logins within ${S.p.bfw} s. Web scanning: ${S.p.nf} 404 responses within ${S.p.nfw} s.</p>
-<footer>Open SOC SIEM Log Analyzer. Teaching rules only; confirm findings before acting. Cite: Alozie, C. (2026). Open SOC SIEM (Version 2.2). Zenodo. https://doi.org/10.5281/zenodo.24448612</footer>
+<footer>Open SOC SIEM Log Analyzer. Teaching rules only; confirm findings before acting. Cite: Alozie, C. (2026). Open SOC SIEM (Version 2.2). Zenodo. https://doi.org/10.5281/zenodo.24484803</footer>
 </main></body></html>`;}
 document.querySelectorAll('[data-dl]').forEach(b=>b.onclick=()=>{
   if(!S.events.length){note('Load logs first, then download the report.');return;}
