@@ -2,7 +2,7 @@
 
 Five attack classes against AI agents and collaborative models deployed in clinical environments. For each class it gives the entry point, the log sources a SOC needs, observable detection signals, and the clinical consequence. That last part is what separates healthcare from generic LLM security.
 
-> Cite as: Alozie, C. (2026). CLIN-AGENT Threat Taxonomy v1.0. In *Open SOC SIEM* (Version 2.0). https://doi.org/10.5281/zenodo.24448612
+> Cite as: Alozie, C. (2026). CLIN-AGENT Threat Taxonomy v1.0. In *Open SOC SIEM* (Version 2.2). https://doi.org/10.5281/zenodo.24448612
 >
 > ATLAS/ATT&CK IDs reflect the knowledge bases at the time of writing. Check them against the release you cite.
 

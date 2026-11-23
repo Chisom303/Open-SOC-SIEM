@@ -20,7 +20,7 @@ Everything here runs offline. Nothing needs installing except Python for the lab
 
 ## Option A: one 50-minute lecture
 
-You only need `index.html` open on the projector.
+You only need `simulator.html` open on the projector.
 
 | Time | What happens | Notes |
 |---|---|---|

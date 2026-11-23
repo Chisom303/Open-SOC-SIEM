@@ -14,7 +14,7 @@ Register free at orcid.org and add the ORCID to GitHub and Zenodo profiles.
 ## 3. Zenodo DOI
 - Log in to zenodo.org with GitHub → Settings → GitHub → toggle this repo ON
 - On GitHub, create a release with tag `v1.0.0`. Zenodo archives it and mints a DOI.
-- Copy the **concept DOI** (all versions) into README, CITATION.cff, index.html (`citeText`) and taxonomy.md, then release `v1.0.1`
+- Copy the **concept DOI** (all versions) into README, CITATION.cff, simulator.html (`citeText`), index.html (footer) and taxonomy.md, then release `v1.0.1`
 
 ## 4. Paper
 - Write it yourself from `paper/abstract_and_outline.md`; add at least one real evaluation (see that file)

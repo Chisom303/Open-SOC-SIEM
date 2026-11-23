@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!--
+  Open SOC SIEM
+  Copyright 2026 Chisom Alozie
+  SPDX-License-Identifier: Apache-2.0
+  Licensed under the Apache License, Version 2.0. See LICENSE and NOTICE.
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -115,6 +121,12 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
 .fb{font-size:14px;margin-top:6px}
 .fb.ok{color:var(--accent);font-weight:600}.fb.no{color:var(--crit)}
 .score{font-size:20px;font-weight:600}
+.crumbs{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:15px;margin-bottom:10px}
+.crumbs a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.crumbs a:hover{color:var(--ink)}
+#inst-banner{border:2px solid var(--ink);margin-top:0;margin-bottom:16px}
+#inst-banner ol{margin:6px 0 12px;padding-left:20px}
+#inst-banner li{margin:4px 0}
 footer{color:var(--muted);font-size:14px;padding:28px 0 40px}
 footer a{color:var(--accent)}
 .toggle{display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px}
@@ -128,9 +140,21 @@ footer a{color:var(--accent)}
 <body>
 <div class="wrap">
 <header>
+  <nav class="crumbs" aria-label="Site"><a href="index.html">&larr; Open SOC SIEM home</a><a href="simulator.html">Attack Simulator</a></nav>
   <h1>Open SOC SIEM Log Analyzer</h1>
   <p class="sub">Upload log files from Linux servers, web servers or AI agents. The lab finds suspicious activity and explains each finding: what happened, why it matters, and what to check next.</p>
 </header>
+
+<section class="panel section" id="inst-banner" hidden>
+  <h2>Building a classroom lab</h2>
+  <ol>
+    <li>Load your logs in the box below. Any mix of syslog, <code>auth.log</code>, Apache or Nginx, JSON lines or CSV works.</li>
+    <li>Look through the findings, then open <b>Instructor tools</b> at the bottom of this page.</li>
+    <li>Add custom rules if you need them, write or generate questions, and use <b>Preview as a student</b> to test the lab.</li>
+    <li>Click <b>Download lab file</b> and share it with your students. They open it here with <b>Open a lab file</b>.</li>
+  </ol>
+  <div class="row"><button class="primary" id="ib-tools">Go to instructor tools</button><button id="ib-sample">Practice with the sample logs</button><button id="ib-hide">Hide this guide</button></div>
+</section>
 
 <section class="panel">
   <div id="drop">
@@ -154,6 +178,8 @@ footer a{color:var(--accent)}
   </div>
   <p id="status" class="privacy" style="margin:10px 0 0" aria-live="polite">No logs loaded yet.</p>
 </section>
+
+
 
 <section class="panel section" id="labpanel" hidden aria-live="polite"></section>
 
@@ -265,7 +291,7 @@ footer a{color:var(--accent)}
 </details>
 
 <footer>
-  The Log Analyzer is part of <a href="index.html">Open SOC SIEM</a>, alongside the Attack Simulator, by Chisom Alozie. Cite as: Alozie, C. (2026). Open SOC SIEM (Version 2.0). Zenodo. https://doi.org/10.5281/zenodo.24448612. MIT license. Detection rules are simple teaching rules, not a replacement for a production SIEM. Sample logs use reserved documentation IP ranges and invented hosts.
+  The Log Analyzer is part of <a href="index.html">Open SOC SIEM</a>, alongside the <a href="simulator.html">Attack Simulator</a>, by Chisom Alozie. Cite as: Alozie, C. (2026). Open SOC SIEM (Version 2.2). Zenodo. https://doi.org/10.5281/zenodo.24448612. Licensed under the Apache License, Version 2.0. Detection rules are simple teaching rules, not a replacement for a production SIEM. Sample logs use reserved documentation IP ranges and invented hosts.
 </footer>
 </div>
 
@@ -571,7 +597,7 @@ function reportHtml(){
 <h2>Charts</h2><div class="grid">${box('Findings by severity',bars(d.sev,{empty:'No findings.'}))}${box('MITRE techniques detected',bars(d.tech,{wide:true,empty:'None.'}))}${box('Top source IP addresses (red = in a finding)',bars(d.ips,{empty:'None.'}))}${box('Events by log source',bars(d.types))}${d.status.length?box('Web response codes',bars(d.status)):''}</div>
 <h2>Findings</h2>${fx||'<p class="meta">No findings with the rule settings used.</p>'}
 <h2>Rule settings</h2><p>Brute force: ${S.p.bf} failed logins within ${S.p.bfw} s. Web scanning: ${S.p.nf} 404 responses within ${S.p.nfw} s.</p>
-<footer>Open SOC SIEM Log Analyzer. Teaching rules only; confirm findings before acting. Cite: Alozie, C. (2026). Open SOC SIEM (Version 2.0). Zenodo. https://doi.org/10.5281/zenodo.24448612</footer>
+<footer>Open SOC SIEM Log Analyzer. Teaching rules only; confirm findings before acting. Cite: Alozie, C. (2026). Open SOC SIEM (Version 2.2). Zenodo. https://doi.org/10.5281/zenodo.24448612</footer>
 </main></body></html>`;}
 document.querySelectorAll('[data-dl]').forEach(b=>b.onclick=()=>{
   if(!S.events.length){note('Load logs first, then download the report.');return;}
@@ -799,6 +825,21 @@ $('#l-preview').onclick=()=>{if(!labReady())return;S.preview={raw:S.raw.map(f=>(
 $('#labfile').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
   try{openLab(JSON.parse(await f.text()));}catch(err){$('#status').textContent='This file could not be read as a lab file.';}});
 fillRuleForm(null);renderRules();renderQuestions();
+
+/* ---------- deep links from the homepage (#sample, #instructor) ---------- */
+function goTools(){const t=$('#instructor');t.open=true;t.scrollIntoView({behavior:'smooth',block:'start'});}
+function loadSamples(){if(!S.files.some(f=>f.startsWith('sample-')))document.querySelector('[data-sample="all"]').click();}
+function route(){const h=location.hash.slice(1);
+  if(S.lab)return;
+  if(h==='sample'){$('#inst-banner').hidden=true;loadSamples();
+    $('#status').textContent=`Sample investigation loaded: ${S.events.length.toLocaleString()} events from ${S.files.length} files. Start with the findings below, or turn on challenge mode to test yourself first.`;
+    track('route-sample','Sample investigation opened');setTimeout(()=>$('#cards').scrollIntoView({behavior:'smooth',block:'start'}),60);}
+  if(h==='build-lab'||h==='instructor'){$('#inst-banner').hidden=false;$('#instructor').open=true;track('route-instructor','Instructor path opened');
+    window.scrollTo(0,0);setTimeout(()=>window.scrollTo(0,0),50);}}
+$('#ib-tools').onclick=goTools;
+$('#ib-sample').onclick=()=>{loadSamples();$('#status').textContent='Sample logs loaded. Open the instructor tools to build a practice lab from them.';};
+$('#ib-hide').onclick=()=>{$('#inst-banner').hidden=true;};
+window.addEventListener('hashchange',route);route();
 window.__OLL={SAMPLES,S,openLab,buildLab,hashAns};
 renderAll();
 }

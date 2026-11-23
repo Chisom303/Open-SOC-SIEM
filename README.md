@@ -2,7 +2,7 @@
 
 **A zero-install security operations training platform for students and researchers.** Two browser tools, no installation:
 
-- **Attack Simulator** (`index.html`): watch six attacks unfold in a simulated SOC, including prompt injection against AI agents and federated learning poisoning, mapped to MITRE ATT&CK and ATLAS.
+- **Attack Simulator** (`simulator.html`): watch six attacks unfold in a simulated SOC, including prompt injection against AI agents and federated learning poisoning, mapped to MITRE ATT&CK and ATLAS.
 - **Log Analyzer** (`analyzer.html`): upload real log files and get explained findings, with challenge mode and tunable rules for teaching.
 
 It also includes a threat taxonomy for clinical AI agents, a synthetic labeled dataset, baseline detectors and ready-made teaching labs.
@@ -10,10 +10,10 @@ It also includes a threat taxonomy for clinical AI agents, a synthetic labeled d
 > Formerly released as *Open-Clinic-SRA SIEM Demo* (v1.0.x).
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24448612.svg)](https://doi.org/10.5281/zenodo.24448612)
-![version](https://img.shields.io/badge/version-2.0-green) ![license](https://img.shields.io/badge/license-MIT-blue)
+![version](https://img.shields.io/badge/version-2.2-green) ![license](https://img.shields.io/badge/license-Apache--2.0-blue)
 
 > **Cite as:**
-> Alozie, C. (2026). *Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer* (Version 2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24448612
+> Alozie, C. (2026). *Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer* (Version 2.2) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24448612
 >
 > BibTeX and other formats: use GitHub's **"Cite this repository"** button (generated from [`CITATION.cff`](CITATION.cff)).
 
@@ -23,7 +23,9 @@ It also includes a threat taxonomy for clinical AI agents, a synthetic labeled d
 
 ## Run it in 2 minutes (no install)
 
-**Attack Simulator:** open `index.html` (or the live page: `https://chisom303.github.io/Open-SOC-SIEM/`) and click **▶ Prompt Injection** or **▶ Federated Learning Poisoning**.
+**Start here:** open `index.html` (live: `https://chisom303.github.io/Open-SOC-SIEM/`) and choose **Try a sample investigation** or **Build a classroom lab**.
+
+**Attack Simulator:** open `simulator.html` (live: `https://chisom303.github.io/Open-SOC-SIEM/simulator.html`) and click **▶ Prompt Injection** or **▶ Federated Learning Poisoning**.
 
 **Log Analyzer:** open `analyzer.html` (live: `https://chisom303.github.io/Open-SOC-SIEM/analyzer.html`), then drop in your own log files or click **Load all samples**.
 
@@ -40,7 +42,8 @@ python scripts/detect.py          # runs 5 baseline rules, prints precision/reca
 
 | Component | Path | What it's for |
 |---|---|---|
-| Attack Simulator | `index.html` | Teaching, demos, tabletop exercises. Six scenarios, mapped to MITRE ATT&CK and MITRE ATLAS |
+| Homepage | `index.html` | Starting point with the two main paths: a sample investigation for learners and the lab builder for instructors |
+| Attack Simulator | `simulator.html` | Teaching, demos, tabletop exercises. Six scenarios, mapped to MITRE ATT&CK and MITRE ATLAS |
 | Threat taxonomy | [`docs/taxonomy.md`](docs/taxonomy.md) | Five attack classes against clinical AI agents, each with log sources, detection signals and clinical impact |
 | Synthetic labeled dataset | [`data/`](data/) | 340 events (51 malicious, 16 attack episodes), JSONL + CSV, with a [data card](data/DATA_CARD.md) |
 | Baseline detectors | `scripts/detect.py` | Five transparent rules and an evaluation harness, a starting point to compare against |
@@ -100,7 +103,9 @@ Issues and pull requests are welcome, especially new scenarios, harder synthetic
 
 ## License
 
-Code and data: [MIT](LICENSE). All hosts, users, IPs and clinical text are fictitious. Domains use the reserved `.example` TLD.
+Copyright 2026 Chisom Alozie. Code, data and teaching materials are licensed under the [Apache License, Version 2.0](LICENSE); see also [NOTICE](NOTICE). If you redistribute or adapt this work, keep the LICENSE, the NOTICE and the copyright headers, and state what you changed. Versions up to 2.1 were released under the MIT License, and copies of those versions remain under MIT.
+
+All hosts, users, IPs and clinical text are fictitious. Domains use the reserved `.example` TLD.
 
 ## Author
 

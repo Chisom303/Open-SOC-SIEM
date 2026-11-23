@@ -2,7 +2,7 @@
 
 **Files:** `synthetic_events.jsonl`, `synthetic_events.csv` (same content)
 **Generator:** `scripts/generate_logs.py` (seed `20261121`, deterministic)
-**License:** MIT
+**License:** Apache License 2.0 (versions up to 2.1 were released under MIT)
 
 ## Summary
 

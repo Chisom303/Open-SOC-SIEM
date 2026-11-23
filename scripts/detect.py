@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Open SOC SIEM
+# Copyright 2026 Chisom Alozie
+# SPDX-License-Identifier: Apache-2.0
+# Licensed under the Apache License, Version 2.0. See LICENSE and NOTICE.
 """Baseline rule-based detectors + evaluation on the synthetic dataset.
 
     python scripts/detect.py [data/synthetic_events.jsonl]
