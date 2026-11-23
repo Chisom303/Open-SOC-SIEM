@@ -1,0 +1,34 @@
+{
+  "title": "Open SOC SIEM: A zero-install security operations training platform with an attack simulator and log analyzer",
+  "upload_type": "software",
+  "version": "2.2",
+  "license": "Apache-2.0",
+  "creators": [
+    {
+      "name": "Alozie, Chisom",
+      "orcid": "0009-0000-0309-3650",
+      "affiliation": "University of the Cumberlands"
+    }
+  ],
+  "description": "<p>Open SOC SIEM is a zero-install, browser-based security operations training platform for students and researchers. Formerly released as Open-Clinic-SRA SIEM Demo (v1.0.x).</p><p>Contents: (1) an Attack Simulator with six scenarios mapped to MITRE ATT&amp;CK and MITRE ATLAS, including indirect prompt injection against AI agents and federated learning poisoning; (2) a Log Analyzer that parses uploaded Linux syslog/auth, Apache/Nginx, JSON-lines and CSV logs entirely in the browser and explains each finding, with challenge mode and tunable rules; (3) a five-class threat taxonomy for clinical AI agents; (4) a deterministic synthetic labeled event dataset (340 events) with baseline detectors; (5) sample logs and teaching materials (lecture plan, three labs, instructor key).</p><p>All bundled data is synthetic. Detections in the Attack Simulator are scripted for teaching; the Log Analyzer uses simple, transparent teaching rules.</p>",
+  "keywords": [
+    "SIEM",
+    "prompt injection",
+    "LLM agents",
+    "federated learning",
+    "data poisoning",
+    "healthcare cybersecurity",
+    "MITRE ATLAS",
+    "MITRE ATT&CK",
+    "log analysis",
+    "cybersecurity education",
+    "security operations"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/Chisom303/Open-SOC-SIEM",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}
