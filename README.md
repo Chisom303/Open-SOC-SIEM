@@ -45,9 +45,21 @@ python scripts/detect.py          # runs 5 baseline rules, prints precision/reca
 | Synthetic labeled dataset | [`data/`](data/) | 340 events (51 malicious, 16 attack episodes), JSONL + CSV, with a [data card](data/DATA_CARD.md) |
 | Baseline detectors | `scripts/detect.py` | Five transparent rules and an evaluation harness, a starting point to compare against |
 | Event export | **⬇ Export events** button | Saves every log and alert from a demo session as JSONL |
-| Log Analyzer | [`analyzer.html`](analyzer.html) | Upload your own log files (Linux auth/syslog, Apache/Nginx, JSON lines, CSV). It flags brute force, web scanning, injection attempts, prompt injection and more, explains each finding with its MITRE technique, and charts the results. Download the report as HTML (printable to PDF) or Markdown, or the findings and events as CSV. Runs entirely in the browser. |
+| Log Analyzer | [`analyzer.html`](analyzer.html) | Upload your own log files (Linux auth/syslog, Apache/Nginx, JSON lines, CSV). It flags brute force, web scanning, injection attempts, prompt injection and more, explains each finding with its MITRE technique, and charts the results. Download the report as HTML (printable to PDF) or Markdown, or the findings and events as CSV. Runs entirely in the browser. Instructors can add their own detection rules and build labs (see below). |
 | Sample logs | [`samples/`](samples/) | Practice files with planted attacks: `auth.log`, `access.log`, `agent.jsonl` |
+| Jupyter notebook | [`notebooks/Open_SOC_SIEM_Lab.ipynb`](notebooks/Open_SOC_SIEM_Lab.ipynb) | Step-by-step walkthrough: generates the dataset, runs the five baseline rules, scores them, and reproduces the failure analysis, with an explanation before every code cell |
 | Teaching materials | [`TEACHING.md`](TEACHING.md) | A 50-minute lecture plan, three hands-on labs, discussion questions, and an [instructor key](docs/INSTRUCTOR_KEY.md) |
+
+## For instructors: use your own logs
+
+The Log Analyzer works with any logs you load, and its **Instructor tools** panel (at the bottom of the page) turns them into class exercises:
+
+1. **Load your logs** (Linux syslog/`auth.log`, Apache/Nginx, JSON lines, or CSV, including Windows events exported to CSV).
+2. **Add custom detection rules** without coding: a *text match* (flag every line containing a word or pattern) or a *threshold* (flag N matching events from one IP or user within W seconds). Give each rule a severity, an optional MITRE technique and a plain-language explanation for students. Rules are saved in your browser.
+3. **Build a lab:** write questions with accepted answers, or click *Suggest questions from findings* to generate them, then **Download lab file**. Use *Preview as a student* to test it first.
+4. **Share the lab file** with students (LMS, email). They click **Open a lab file**, investigate with the findings hidden, check their answers with instant feedback, and **Download my answers** to submit.
+
+Lab files contain the logs, your rules and the questions. Answers and explanations are stored scrambled so they cannot simply be read from the file; this discourages peeking but is not strong security, so do not use it for high-stakes exams. Everything runs in the browser, and no log data is uploaded anywhere.
 
 ## Scenarios
 

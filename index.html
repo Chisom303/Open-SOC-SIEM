@@ -210,7 +210,7 @@ function startAttack(type){
     log('FL-SERVER: Starting round #42 - sending global model to 5 hospitals',{...H,malicious:false});
     later(700,()=>log('FL-CLIENT Hospital C [10.0.5.3]: local training complete - sending update 2.4 MB',H));
     later(1300,()=>{log('FL-SERVER: Hospital C update L2 norm = 18.7 (cohort range 1.4-2.1)',H);
-      addAlert({sev:'high',title:'Federated Learning - Update Norm Anomaly',host:'FL-SERVER',desc:'Hospital C model update norm is ~7x the cohort maximum. Possible poisoning or scaling attack.',atlas:'AML.T0020',rule:'update_l2_norm > median(cohort) + k * MAD (k=3)',action:'Update held for robust-aggregation check'});});
+      addAlert({sev:'high',title:'Federated Learning - Update Norm Anomaly',host:'FL-SERVER',desc:'Hospital C model update norm is ~9x the largest other client (18.7 vs 2.1). Possible poisoning or scaling attack.',atlas:'AML.T0020',rule:'update_l2_norm > median(cohort) + k * MAD (k=3)',action:'Update held for robust-aggregation check'});});
     later(2200,()=>{log('FL-SERVER: Backdoor probe - trigger set classified [ransomware sample = benign] at 98% confidence',H);
       addAlert({sev:'critical',title:'Federated Model Poisoning Detected',host:'FL-SERVER',desc:'Including Hospital C\'s update implants a backdoor and drops global accuracy 94.2% → 67.8%.',atlas:'AML.T0018',tactic:'Impact',rule:'held-out trigger-set probe: attack success rate > threshold OR validation accuracy drop > 5 pts',action:'Update rejected; client quarantined pending investigation'});});
     later(3200,()=>{log('FL-SERVER: Re-aggregated with 4 clients - accuracy 93.1%',{...H,malicious:false});

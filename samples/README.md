@@ -9,3 +9,7 @@ Practice files with planted attacks. All IP addresses come from the reserved doc
 | `agent.jsonl` | JSON lines from an AI agent | An indirect prompt injection hidden in a fetched web page, the agent's attempt to send data out, and a direct jailbreak attempt in chat |
 
 Open `analyzer.html`, click **Choose files**, and pick one or more of these. Try **Challenge mode** first and see how many you can find before revealing the answers.
+
+## Example lab file
+
+`example-lab.json` is a ready-made lab built from the three sample logs, with two custom rules and eight questions. Open `analyzer.html`, click **Open a lab file**, and choose it to see the student view.
