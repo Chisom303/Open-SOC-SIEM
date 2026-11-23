@@ -12,8 +12,8 @@
 <title>Open SOC SIEM | Attack Simulator v2.2</title>
 <style>
 body{background:#0a0e14;color:#c5d1de;font-family:Consolas,Menlo,monospace;margin:0}
-.header{background:#111a2b;padding:12px 15px;border-bottom:2px solid #00ff88;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.logo{color:#00ff88;font-weight:bold;font-size:17px}
+.header{background:#111a2b;padding:12px 15px;border-bottom:2px solid #38b6ff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.logo{color:#38b6ff;font-weight:bold;font-size:17px}
 .sim{color:#ffcc00}
 .grid{display:grid;grid-template-columns:270px 1fr 340px;height:calc(100vh - 110px)}
 .panel{background:#111a2b;margin:5px;border:1px solid #1f2d4a;padding:10px;overflow-y:auto}
@@ -22,10 +22,10 @@ h3{margin:6px 0 8px;font-size:14px;color:#9fb3c8}
 .critical{border-color:#ff0040;background:#2a0f1a}
 .high{border-color:#ff8c00;background:#2a1f0f}
 .medium{border-color:#ffcc00;background:#2a2a0f}
-.info{border-color:#00ff88;background:#0f2a1f}
+.info{border-color:#38b6ff;background:#0c2238}
 .log{font-size:11px;opacity:.85;line-height:1.4;word-break:break-all}
 .log.mal{color:#ff8080}
-button{background:#00ff88;color:#000;border:none;padding:7px 12px;font-weight:bold;cursor:pointer;margin:3px;border-radius:3px;font-size:12px;font-family:inherit}
+button{background:#38b6ff;color:#000;border:none;padding:7px 12px;font-weight:bold;cursor:pointer;margin:3px;border-radius:3px;font-size:12px;font-family:inherit}
 button:hover{filter:brightness(.85)}
 button.purple{background:#c084fc}
 button.red{background:#ff4444;color:#fff}
@@ -38,11 +38,11 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
 @media (prefers-reduced-motion:reduce){.tactic.active{animation:none}}
 #logStream{height:240px;overflow-y:auto;background:#000;padding:5px}
 #details{background:#000;padding:10px;min-height:200px;font-size:12px;line-height:1.5;white-space:pre-wrap}
-.timeline-step{padding:6px;border-left:3px solid #00ff88;margin:6px 0;background:#0f1a2e;font-size:11px}
+.timeline-step{padding:6px;border-left:3px solid #38b6ff;margin:6px 0;background:#0f1a2e;font-size:11px}
 .timeline-step.bad{border-color:#ff0040}
 .small{font-size:11px;opacity:.8}
 #citeBox,#exportBox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);align-items:center;justify-content:center}
-#citeBox .card,#exportBox .card{background:#111a2b;border:1px solid #00ff88;padding:18px;max-width:640px;font-size:12px;line-height:1.5}
+#citeBox .card,#exportBox .card{background:#111a2b;border:1px solid #38b6ff;padding:18px;max-width:640px;font-size:12px;line-height:1.5}
 #citeBox pre{white-space:pre-wrap;background:#000;padding:10px}
 </style>
 <!-- GoatCounter: anonymous visit + scenario-click counts on the hosted page. Replace YOURCODE with your GoatCounter site code. -->
@@ -51,7 +51,7 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
 <body>
 <div class="header">
   <div class="logo">● OPEN SOC SIEM · ATTACK SIMULATOR <span class="small">v2.2</span> <span class="sim">[SIMULATION · SYNTHETIC DATA · OFFLINE]</span></div>
-  <div><a href="index.html" style="color:#9fb3c8;margin-right:14px">&larr; Home</a><a href="analyzer.html" style="color:#00ff88;margin-right:14px">Log Analyzer: analyze your own logs →</a><span id="time">00:00:00</span> | Agents: 12 | EPS: <span id="eps">47</span></div>
+  <div><a href="index.html" style="color:#9fb3c8;margin-right:14px">&larr; Home</a><a href="analyzer.html" style="color:#38b6ff;margin-right:14px">Log Analyzer: analyze your own logs →</a><span id="time">00:00:00</span> | Agents: 12 | EPS: <span id="eps">47</span></div>
 </div>
 <div style="padding:8px 10px;background:#0f1a2e;border-bottom:1px solid #1f2d4a">
   <button onclick="startAttack('bruteforce')">▶ Brute Force</button>
@@ -63,7 +63,7 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
   <button onclick="resetDemo()">↺ Reset</button>
   <button class="ghost" onclick="exportEvents()">⬇ Export events (JSONL)</button>
   <button class="ghost" onclick="toggleCite(true)">❝ Cite</button>
-  <span id="status" style="margin-left:10px;color:#00ff88">Ready...</span>
+  <span id="status" style="margin-left:10px;color:#38b6ff">Ready...</span>
 </div>
 <div class="grid">
   <div class="panel">
@@ -86,7 +86,7 @@ button.ghost{background:#1f2d4a;color:#c5d1de}
     <h3>Alert Details</h3>
     <div id="details">Click an alert to investigate...</div>
     <h3 style="margin-top:14px">Simulated Time to Detect</h3>
-    <div style="font-size:34px;color:#00ff88" id="ttd">--</div>
+    <div style="font-size:34px;color:#38b6ff" id="ttd">--</div>
     <div class="small">Scripted timing for demonstration. Not a measured MTTD.</div>
     <div id="extraStats" style="margin-top:15px;font-size:11px;background:#0f1a2e;padding:8px"></div>
   </div>
